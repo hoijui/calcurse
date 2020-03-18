@@ -1429,6 +1429,21 @@ void io_log_display(struct io_file *log, const char *msg, const char *pager)
 	if (ui_mode == UI_CMDLINE) {
 		fprintf(stderr, "\n%s\n", msg);
 		fprintf(stderr, _("See %s for details."), log->name);
+
+char* source_file = log->name;
+char* target_file = "/tmp/calcurse_non_deleted.txt";
+FILE *source, *target;
+char ch;
+
+source = fopen(source_file, "r");
+target = fopen(target_file, "w");
+
+while ((ch = fgetc(source)) != EOF)
+	fputc(ch, target);
+
+fclose(source);
+fclose(target);
+
 		fputc('\n', stderr);
 	} else {
 		asprintf(&msgq, "%s %s", msg, _("Display log file?"));
